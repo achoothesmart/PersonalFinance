@@ -1,0 +1,90 @@
+
+/* Fade In */
+
+@-webkit-keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+.fadeIn {
+	-webkit-animation-duration: 0.25s;
+	animation-duration: 0.25s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	width: 100%;
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+/* Fade Out*/
+
+@-webkit-keyframes fadeOut {
+	0% {opacity: 1; width: 100%;}
+	99% { width: 100%; }
+	100% {opacity: 0; width: 0%;}
+}
+
+@keyframes fadeOut {
+	0% {opacity: 1; width: 100%;}
+	99% { width: 100%; }
+	100% {opacity: 0; width: 0%;}
+}
+
+.fadeOut {
+	-webkit-animation-duration: 0.25s;
+	animation-duration: 0.25s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	width: 100%;
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
+/* Slide In */
+
+@-webkit-keyframes slideIn {
+	0% {width: 0em; opacity: 0;}
+	100% { width: 10em; opacity: 1;}
+}
+
+@keyframes slideIn {
+	0% {width: 0em; opacity: 0;}
+	100% { width: 10em; opacity: 1;}
+}
+
+.slideIn {
+	-webkit-animation-duration: 0.25s;
+	animation-duration: 0.25s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	/* width: 100%; */
+	-webkit-animation-name: slideIn;
+	animation-name: slideIn;
+}
+
+/* Slide Out */
+
+@-webkit-keyframes slideOut {
+	0% {width: 10em; opacity: 1;}
+	100% { width: 0em; opacity: 0;}
+}
+
+@keyframes slideOut {
+	0% {width: 10em; opacity: 1;}
+	100% { width: 0em; opacity: 0;}
+}
+
+.slideOut {
+	-webkit-animation-duration: 0.25s;
+	animation-duration: 0.25s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	/* width: 100%; */
+	-webkit-animation-name: slideOut;
+	animation-name: slideOut;
+}

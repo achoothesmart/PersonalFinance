@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Personal Finance</title>
+	<link rel="stylesheet" href="./styles/style.css" />
+	<link rel="stylesheet" href="./styles/popup.css" />
+	<link rel="stylesheet" href="./styles/animation.css" />
+	<link rel="stylesheet" href="./styles/page.css" />
+</head>
+
+<body>
+
+	<!-- Region: Navigation -->
+	<div id="navigation" >
+		<table id="nav-table">
+			<tr>
+				<td>
+					<div id="side-menu-button" class="menu-btn" onclick="showSideMenu()">
+						<div class="menu-btn-line"></div>
+						<div class="menu-btn-line"></div>
+						<div class="menu-btn-line"></div>
+					</div>
+				</td>
+				<td></td>
+				<td>
+					<div onclick="loadPage('page-home')">Personal Finance</div>
+				</td>
+				<td>
+					<div> &#9658; </div>
+				</td>
+				<td>
+					<div id="page-label"></div>
+				</td>
+			</tr>
+		</table>
+
+		
+	</div>
+
+	<!-- Region: Pages -->
+	<div id="pages" onclick="hideSideMenu()">
+		<!-- Pages : Home, Transactions, Balance Sheet -->
+		<div id="page-home" class="page hidden" page-label="Home">
+			Home
+		</div>
+		<div id="page-transactions" class="page hidden" page-label="Transactions">
+			<table id="controls">
+				<tr>
+					<td> <button class="button" onclick="loadPopup('import-popup')">Import</button> </td>
+					<td> <button class="button" onclick="loadPopup('entry-popup')">Add Entry</button> </td>
+					<td> <button id="btnDelete" class="button" onclick="deleteSelected()">Delete Selected</button> </td>
+				</tr>
+			</table>
+			<div id="transactions" class="data-table">Transactions</div>
+		</div>
+		<div id="page-balancesheet" class="page hidden" page-label="Balance Sheet">
+			<div id="balance-sheet">Balance Sheet</div>
+		</div>
+	</div>
+	
+
+
+
+	<!-- Region: Side Menu -->
+
+	<div id="side-menu" class="side-menu slideOut">
+		<div class="menu-close" onclick="hideSideMenu()">&lt;</div>
+		<div class="menu-item"></div>
+		<div class="menu-item" onclick="loadPage('page-home')">&#9658; Home</div>
+		<div class="menu-item" onclick="loadPage('page-transactions')">&#9658; Transactions</div>
+		<div class="menu-item" onclick="loadPage('page-balancesheet')">&#9658; Balance sheet</div>
+	</div>
+
+	<!-- Region: Popups -->
+
+	<!-- (1) Entry popup -->
+	<div id="entry-popup" class="popup-box">
+		<h3>Add Entry</h3>
+		<input type="text" id="particular" placeholder="Particular" />
+		<br />
+		<input type="number" id="amount" placeholder="Amount" />
+		<br />
+		<input type="radio" id="entry_type_debit" name="entry_type" value="debit" /> Debit
+		<input type="radio" id="entry_type_credit" name="entry_type" value="credit" /> Credit
+		<br />
+
+		<input type="button" value="Cancel" onclick="closePopup('entry-popup')" />
+		<input type="button" value="Add Entry" onclick="addTrans()" />
+	</div>
+
+	<!-- (2) Import-popup -->
+	<div id="import-popup" class="popup-box">
+		<h3>Bulg Import</h3>
+		
+		<div id="import_options">
+			<div id="import_columns">
+				Columns: 
+				<input id="chk_import_date" type="checkbox" checked onchange="setImportData('import-date', this.checked)"/> Date
+				<input id="chk_import_particular" type="checkbox" checked onchange="setImportData('import-particular', this.checked)"/> Particular
+				<input id="chk_import_debit" type="checkbox" checked onchange="setImportData('import-debit', this.checked)"/> debit
+				<input id="chk_import_credit" type="checkbox" checked onchange="setImportData('import-credit', this.checked)"/> credit
+			</div>
+			
+			<div id="import_delimiter">
+				Delimiter: 
+				<select onchange="setImportDelimiter(this.value)">
+					<option>tab</option>
+					<option>custom</option>
+				</select>
+				<input id="custom_delimiter" class="hide" placeholder="delimiter" oninput="setImportData('import_delimiter_val', this.value)"/>
+				<div class="hint">*tab delimiter used while copying data from data source like excel or database table</div>
+			</div>
+		</div>
+		<br />
+		<!-- <div>Format: <i> [Date]_tab_[Particular]_tab_[debit]_tab_[credit] </i> </div> -->
+		<div>Format: <i> <div data="import-format"></div> </i> </div>
+
+
+		<div>
+			<textarea id="import" rows="10" cols="50" placeholder="Paste copied data here"></textarea>
+		</div>
+		<!-- <div class="hint">Credit Transaction Example: <i>Salary c 54000</i></div>
+        <div class="hint">Credit Transaction Example: <i>Rent d 10000</i></div>
+        <div class="hint">Debit value d is default. All transactions without mentioning 'd' will be treated as bebit</div> -->
+		<br />
+		<div class="hint">
+			<input id="chkOverwriteImport" type="checkbox" checked /> Overwrite Import
+		</div>
+		<input type="button" value="Cancel" onclick="closePopup('import-popup')" />
+		<input type="button" value="Import" onclick="importTrans()" />
+
+	</div>
+
+
+	<!-- Region: Javascript -->
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+	<script>
+		// Your web app's Firebase configuration
+		var firebaseConfig = {
+			apiKey: "AIzaSyD6oLtQTzD_DkGZS3o8vBb6K-9XA8lxfJ4",
+			authDomain: "personalfinance-1.firebaseapp.com",
+			projectId: "personalfinance-1",
+			storageBucket: "personalfinance-1.appspot.com",
+			messagingSenderId: "19427719042",
+			appId: "1:19427719042:web:6bea1a32586114e856c19b",
+			databaseURL: "https://personalfinance-1-default-rtdb.firebaseio.com"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+	</script>
+
+	<script src="./scripts/data.js"></script>
+	<script src="./scripts/pageRouter.js"></script>
+	<script src="./scripts/animation.js"></script>
+	<script src="./scripts/popup.js"></script>
+	<script src="./scripts/script.js"></script>
+	<script src="./scripts/firebaseHandler.js"></script>
+	
+</body>
+
+</html>
