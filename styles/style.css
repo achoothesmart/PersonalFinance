@@ -115,3 +115,9 @@ body{
 /* #import_options{
     text-align: left;
 } */
+
+
+#new-trans-add-btn{
+    width: 3em;
+    cursor: pointer;
+}

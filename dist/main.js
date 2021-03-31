@@ -1,1 +1,0 @@
-(()=>{var r={4:r=>{r.exports={appName:"Personal Finance",version:"1.0"}}},e={};function o(n){var t=e[n];if(void 0!==t)return t.exports;var s=e[n]={exports:{}};return r[n](s,s.exports,o),s.exports}(()=>{const r=o(4);document.write(`${r.appName} Version: ${r.version}`)})()})();

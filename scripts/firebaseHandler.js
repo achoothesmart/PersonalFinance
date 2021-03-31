@@ -3,6 +3,8 @@ var database = firebase.database();
 function testDBConnection(message = 'Tested successfully'){
 	database.ref('test/'+ Date.now()).set({
 		test_message: message
+	}).then(()=>{
+		console.log('Firebase Connection : Success');
 	});
 }
 

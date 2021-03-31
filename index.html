@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="./styles/popup.css" />
 	<link rel="stylesheet" href="./styles/animation.css" />
 	<link rel="stylesheet" href="./styles/page.css" />
+	<link rel="stylesheet" href="./styles/balanceSheets.css" />
 </head>
 
 <body>
@@ -26,7 +27,7 @@
 				</td>
 				<td></td>
 				<td>
-					<div onclick="loadPage('page-home')">Personal Finance</div>
+					<div onclick="loadPage('page-home')" data="app-name">App Name!</div>
 				</td>
 				<td>
 					<div> &#9658; </div>
@@ -54,10 +55,10 @@
 					<td> <button id="btnDelete" class="button" onclick="deleteSelected()">Delete Selected</button> </td>
 				</tr>
 			</table>
-			<div id="transactions" class="data-table">Transactions</div>
+			<div id="transactions" class="data-table">Loading..</div>
 		</div>
-		<div id="page-balancesheet" class="page hidden" page-label="Balance Sheet">
-			<div id="balance-sheet">Balance Sheet</div>
+		<div id="page-balancesheets" class="page hidden" page-label="Balance Sheets">
+			<div id="balance-sheets">Loading..</div>
 		</div>
 	</div>
 	
@@ -70,8 +71,9 @@
 		<div class="menu-close" onclick="hideSideMenu()">&lt;</div>
 		<div class="menu-item"></div>
 		<div class="menu-item" onclick="loadPage('page-home')">&#9658; Home</div>
+		<div class="menu-item" onclick="loadPage('page-balancesheets')">&#9658; Balance sheets</div>
 		<div class="menu-item" onclick="loadPage('page-transactions')">&#9658; Transactions</div>
-		<div class="menu-item" onclick="loadPage('page-balancesheet')">&#9658; Balance sheet</div>
+		
 	</div>
 
 	<!-- Region: Popups -->
@@ -96,13 +98,13 @@
 		<h3>Bulg Import</h3>
 		
 		<div id="import_options">
-			<div id="import_columns">
+			<!-- <div id="import_columns">
 				Columns: 
 				<input id="chk_import_date" type="checkbox" checked onchange="setImportData('import-date', this.checked)"/> Date
 				<input id="chk_import_particular" type="checkbox" checked onchange="setImportData('import-particular', this.checked)"/> Particular
 				<input id="chk_import_debit" type="checkbox" checked onchange="setImportData('import-debit', this.checked)"/> debit
 				<input id="chk_import_credit" type="checkbox" checked onchange="setImportData('import-credit', this.checked)"/> credit
-			</div>
+			</div> -->
 			
 			<div id="import_delimiter">
 				Delimiter: 
@@ -159,8 +161,9 @@
 		firebase.initializeApp(firebaseConfig);
 	</script>
 
-	<script src="./scripts/data.js"></script>
+	<script src="./scripts/dataService.js"></script>
 	<script src="./scripts/pageRouter.js"></script>
+	<script src="./scripts/balanceSheets.js"></script>
 	<script src="./scripts/animation.js"></script>
 	<script src="./scripts/popup.js"></script>
 	<script src="./scripts/script.js"></script>

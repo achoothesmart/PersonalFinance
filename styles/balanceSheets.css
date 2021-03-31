@@ -1,0 +1,18 @@
+.b-sheets{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+
+    width: 100%;
+}
+
+.b-sheet{}
+
+.b-sheet-head{
+
+}
+
+.b-sheet-body{
+
+}

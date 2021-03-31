@@ -1,9 +1,16 @@
 
 /* Fade In */
 
-@-webkit-keyframes fadeIn {
+/* @-webkit-keyframes fadeIn {
 	0% {opacity: 0;}
 	100% {opacity: 1;}
+} */
+
+@-webkit-keyframes fadeIn {
+	0% {opacity: 0; height: 10%;}
+	50% { height: 20%;}
+	90% { height: 60%;}
+	100% {opacity: 1; height: 100%;}
 }
 
 @keyframes fadeIn {
