@@ -7,6 +7,10 @@ body{
     -webkit-user-select: none;
 }
 
+.app-title{
+    cursor: pointer;
+}
+
 .hidden{
     display: none;
 }
@@ -65,43 +69,6 @@ body{
     font-size: large;
 }
 
-.data-table{
-    text-align: right;
-    cursor: pointer;
-    width: 100%;
-}
-
-/* .data-table table{
-    width: 100%;
-} */
-
-.data-table th{
-    padding: 0.25em;
-    text-align: center;
-    background-color: white;
-    color: black;
-}
-
-.data-table td{
-    padding: 0.25em;
-}
-
-.data-table tr:hover{
-    background-color: rgb(82, 82, 82);
-}
-
-.data-table .id-col{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    
-}
-
-.total-row{
-    font-weight: bold;
-    background-color: rgb(70, 70, 100);
-}
-
 .hint{
     font-size: smaller;
 }
@@ -117,7 +84,6 @@ body{
 } */
 
 
-#new-trans-add-btn{
-    width: 3em;
-    cursor: pointer;
+.input-small{
+    width: 6em;
 }

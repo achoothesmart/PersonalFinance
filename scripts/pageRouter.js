@@ -4,7 +4,7 @@ let currentPage = 'page-balancesheets';
 
 loadDOMPage(currentPage);
 
-function loadDOMPage(page_id) {
+function loadDOMPage(page_id, page_title = '') {
     try {
         let dom_pages = document.querySelectorAll('#pages .page');
         dom_pages.forEach(dom_page => {
@@ -16,7 +16,13 @@ function loadDOMPage(page_id) {
             }
         });
 
-        document.getElementById('page-label').innerText = document.getElementById(page_id).attributes['page-label'].value;
+        if(page_title && page_title != ''){
+            document.getElementById('page-label').innerText = page_title;
+        }
+        else{
+            document.getElementById('page-label').innerText = document.getElementById(page_id).attributes['page-label'].value;
+        }
+        
     }
     catch { }
 }

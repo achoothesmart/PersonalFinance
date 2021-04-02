@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="./styles/animation.css" />
 	<link rel="stylesheet" href="./styles/page.css" />
 	<link rel="stylesheet" href="./styles/balanceSheets.css" />
+	<link rel="stylesheet" href="./styles/transactions.css" />
 </head>
 
 <body>
@@ -27,7 +28,8 @@
 				</td>
 				<td></td>
 				<td>
-					<div onclick="loadPage('page-home')" data="app-name">App Name!</div>
+					<!-- <div onclick="loadPage('page-home')" data="app-name">App Name!</div> -->
+					<div class="app-title" onclick="loadPage('page-balancesheets')">Balance Sheets</div>
 				</td>
 				<td>
 					<div> &#9658; </div>
@@ -47,17 +49,18 @@
 		<div id="page-home" class="page hidden" page-label="Home">
 			Home
 		</div>
-		<div id="page-transactions" class="page hidden" page-label="Transactions">
-			<table id="controls">
+		<!-- <div id="page-transactions" class="page hidden" page-label="Transactions"> -->
+		<div id="page-transactions" class="page hidden" page-label="">
+			<!-- <table id="controls">
 				<tr>
 					<td> <button class="button" onclick="loadPopup('import-popup')">Import</button> </td>
 					<td> <button class="button" onclick="loadPopup('entry-popup')">Add Entry</button> </td>
 					<td> <button id="btnDelete" class="button" onclick="deleteSelected()">Delete Selected</button> </td>
 				</tr>
-			</table>
-			<div id="transactions" class="data-table">Loading..</div>
+			</table> -->
+			<div id="transactions" class="trans-table">Loading..</div>
 		</div>
-		<div id="page-balancesheets" class="page hidden" page-label="Balance Sheets">
+		<div id="page-balancesheets" class="page hidden" page-label="All">
 			<div id="balance-sheets">Loading..</div>
 		</div>
 	</div>
@@ -72,7 +75,7 @@
 		<div class="menu-item"></div>
 		<div class="menu-item" onclick="loadPage('page-home')">&#9658; Home</div>
 		<div class="menu-item" onclick="loadPage('page-balancesheets')">&#9658; Balance sheets</div>
-		<div class="menu-item" onclick="loadPage('page-transactions')">&#9658; Transactions</div>
+		<!-- <div class="menu-item" onclick="loadPage('page-transactions')">&#9658; Transactions</div> -->
 		
 	</div>
 
@@ -136,6 +139,11 @@
 
 	</div>
 
+	<!-- Region: ContextMenu  -->
+	<div id="bs-ctx-menu" class="hide">
+		<div class="ctx-menu-item" onclick="ctxMenuItemClick('bs-ctx-menu', 'open')">Open</div>
+		<div class="ctx-menu-item" onclick="ctxMenuItemClick('bs-ctx-menu', 'delete')">Delete</div>
+	</div>
 
 	<!-- Region: Javascript -->
 
@@ -163,6 +171,7 @@
 
 	<script src="./scripts/dataService.js"></script>
 	<script src="./scripts/pageRouter.js"></script>
+	<script src="./scripts/transactions.js"></script>
 	<script src="./scripts/balanceSheets.js"></script>
 	<script src="./scripts/animation.js"></script>
 	<script src="./scripts/popup.js"></script>

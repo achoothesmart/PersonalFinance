@@ -4,7 +4,7 @@ let lst_trans = [];
 let TRAN_ID = 1;
 
 initData({
-	'app-name' : "Personal Finance v1.0",
+	'app-name' : "Personal Finance v1.2",
 	// 'import-date': true,
 	// 'import-particular': true,
 	// 'import-debit': true,
@@ -13,6 +13,12 @@ initData({
 	'import_delimiter_val': "\t",
 	'import_delimiter_txt': "_tab_",
 });
+
+// on app start
+
+onAppStart();
+
+// Test data
 
 balanceSheets = [
 	{ name: 'Jan 2021', transactions: [
@@ -39,6 +45,19 @@ balanceSheets = [
 loadBalanceSheets('balance-sheets', balanceSheets);
 
 loadTransactions();
+
+// declarations
+
+function onAppStart(){
+	initiateContextMenu();
+}
+
+function initiateContextMenu(){
+	// document.addEventListener('contextmenu', (event)=>{
+	// 	console.log(event);
+	// 	event.preventDefault();
+	// }, false);
+}
 
 function newTranId() {
 	return TRAN_ID++;
@@ -81,38 +100,7 @@ function getTotal(tranType = 'all') {
 	return total;
 }
 
-function loadTransactions() {
-	let html = '<table>';
-	html += '<tr> <th class="id-col"><input id="chk_all" type="checkbox" class="chk" onclick="selectAllTrans()"/>ID</th>'
-	html += '<th> Date </th> <th>Particular</th> <th>Debit (INR)</th> <th>Credit (INR)</th> </tr>';
-	html += lst_trans.map(tran =>
-		`<tr onclick='onTranClick(event, ${tran.id})'> 
-				<td class="id-col"><input id='chk_${tran.id}' type='checkbox' class='chk'/>${tran.id}</td> 
-				<td>${tran.date ? tran.date : ''}</td>
-				<td>${tran.particular}</td> 
-				<td>${tran.type == 'debit' ? currency(tran.amount) : 0}</td> 
-				<td>${tran.type == 'credit' ? currency(tran.amount) : 0}</td> 
-			</tr>`
-	).join(' ');
 
-	// Add new Trans row
-	html += getNewTransRow();
-	html += `<tr class='total-row'> <td colspan='3'>Total</td> <td>${currency(getTotal('debit'))}</td> <td>${currency(getTotal('credit'))}</td> </tr>`;
-	html += `<tr class='total-row'> <td colspan='3'>Balance</td> <td colspan='2'>${currency(getTotal())}</td>  </tr>`;
-	html += '</table>';
-	document.getElementById('transactions').innerHTML = html;
-}
-
-function getNewTransRow(date = new Date(), particular = '', debit = '', credit = ''){
-	date = getDateFormat(date, 'yyyy-MM-dd');
-	return `<tr'> 
-		<td> <input type='button' value='+' id='new-trans-add-btn' onclick='addNewTrans()' /> </td> 
-		<td> <input type='date' id='newTranDate' value='${date}'/>  </td>
-		<td> <input type='text' id='newTranParticular' value='${particular}'/> </td> 
-		<td> <input type='number' id='newTranDebit'  onkeydown='onAmountKeyDown(event)' oninput='onNewTranInput("debit")'  value='${debit}'/>  </td> 
-		<td> <input type='number' id='newTranCredit' onkeydown='onAmountKeyDown(event)' oninput='onNewTranInput("credit")' value='${credit}'/> </td> 
-	</tr>`;
-}
 
 function onAmountKeyDown(event){
 	console.log(event);
@@ -353,8 +341,8 @@ function hideSideMenu() {
 	slideOut('side-menu');
 }
 
-function loadPage(page_id) {
-	loadDOMPage(page_id);
+function loadPage(page_id, pageTitle) {
+	loadDOMPage(page_id, pageTitle);
 	hideSideMenu();
 }
 
@@ -364,6 +352,15 @@ function show(el){
 
 function hide(el){
 	el.classList.add('hide');
+}
+
+function ctxMenuItemClick(menu_id, action_name){
+	// console.log(menu_id, action_name);
+	if(menu_id == 'bs-ctx-menu'){
+		onBsCtxMenuClick(action_name);
+	}
+	
+	hide(document.getElementById(menu_id));
 }
 
 /*

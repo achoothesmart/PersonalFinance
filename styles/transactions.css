@@ -1,0 +1,52 @@
+
+.trans-table{
+    text-align: right;
+    font-size: small;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* .trans-table table{
+    width: 100%;
+} */
+
+.trans-table th{
+    padding: 0.25em;
+    text-align: center;
+    background-color: white;
+    color: black;
+}
+
+.trans-table td{
+    padding: 0.25em;
+}
+
+.trans-table tr:hover{
+    background-color: rgb(82, 82, 82);
+}
+
+.trans-table .id-col{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.trans-table .credit{
+    background-color: green;
+}
+
+.total-row{
+    font-weight: bold;
+    background-color: rgb(70, 70, 100);
+}
+
+#new-trans-add-btn{
+    width: 3em;
+    cursor: pointer;
+}
+
+#newTranDate{
+    width: 10em;
+    font-size: x-small;
+}
