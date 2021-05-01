@@ -35,12 +35,11 @@
 					<div> &#9658; </div>
 				</td>
 				<td>
-					<div id="page-label"></div>
+					<div id="page-label" ondblclick="onPageLabelDblClick()"></div>
+					<input id="bs-name-edit" class="hidden" onkeydown="onBsNameKeyDown(event)"/>
 				</td>
 			</tr>
 		</table>
-
-		
 	</div>
 
 	<!-- Region: Pages -->
@@ -64,14 +63,11 @@
 			<div id="balance-sheets">Loading..</div>
 		</div>
 	</div>
-	
-
-
 
 	<!-- Region: Side Menu -->
 
 	<div id="side-menu" class="side-menu slideOut">
-		<div class="menu-close" onclick="hideSideMenu()">&lt;</div>
+		<div class="menu-close" onclick="hideSideMenu()"> <div id="side-menu-arrow">&#9658;</div></div>
 		<div class="menu-item"></div>
 		<div class="menu-item" onclick="loadPage('page-home')">&#9658; Home</div>
 		<div class="menu-item" onclick="loadPage('page-balancesheets')">&#9658; Balance sheets</div>

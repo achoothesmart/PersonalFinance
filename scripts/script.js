@@ -21,18 +21,18 @@ onAppStart();
 // Test data
 
 balanceSheets = [
-	{ name: 'Jan 2021', transactions: [
-		{ id: 1, date: '01/01/2021', particular: 'Salary', amount: 45000.00, type: 'credit' },
-		{ id: 2, date: '12/01/2021', particular: 'Rent', amount: 10000.00, type: 'debit' },
+	{ name: 'Jan 2021', saved: true, transactions: [
+		{ id: 1, date: '01/01/2021', particular: 'Salary', amount: 45000.00, type: 'credit', saved: true },
+		{ id: 2, date: '12/01/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true },
 	]},
-	{ name: 'Feb 2021', transactions: [
-		{ id: 1, date: '01/02/2021', particular: 'Salary', amount: 47000.00, type: 'credit' },
-		{ id: 2, date: '12/02/2021', particular: 'Travel', amount: 2200.00, type: 'debit' },
+	{ name: 'Feb 2021', saved: true, transactions: [
+		{ id: 1, date: '01/02/2021', particular: 'Salary', amount: 47000.00, type: 'credit', saved: true },
+		{ id: 2, date: '12/02/2021', particular: 'Travel', amount: 2200.00, type: 'debit', saved: true },
 	]},
-	{ name: 'Mar 2021', transactions: [
-		{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit' },
-		{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit' },
-		{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit' }
+	{ name: 'Mar 2021', saved: true, transactions: [
+		{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit', saved: true },
+		{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit', saved: true },
+		{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true }
 	]},
 ];
 
@@ -60,22 +60,22 @@ function initiateContextMenu(){
 }
 
 function newTranId() {
-	return TRAN_ID++;
+	return Date.now()  + TRAN_ID++;
 }
-function addTrans() {
-	if (!validateEntry()) {
-		return;
-	}
-	lst_trans.push({
-		id: newTranId(),
-		particular: particular.value,
-		amount: Number.parseFloat(amount.value),
-		type: Array.from(document.getElementsByName('entry_type')).filter(el => el.checked)[0].value
-	});
-	closePopup('entry-popup');
-	clearEntry();
-	loadTransactions();
-}
+// function addTrans() {
+	// if (!validateEntry()) {
+	// 	return;
+	// }
+	// lst_trans.push({
+	// 	id: newTranId(),
+	// 	particular: particular.value,
+	// 	amount: Number.parseFloat(amount.value),
+	// 	type: Array.from(document.getElementsByName('entry_type')).filter(el => el.checked)[0].value
+	// });
+	// closePopup('entry-popup');
+	// clearEntry();
+	// loadTransactions();
+// }
 
 function validateEntry() {
 	return particular.value.trim() != '' && amount.value.trim() != '';
@@ -100,103 +100,6 @@ function getTotal(tranType = 'all') {
 	return total;
 }
 
-
-
-function onAmountKeyDown(event){
-	console.log(event);
-	if(event.key == 'Enter'){
-		addNewTrans();
-	}
-}
-
-function addTransaction(date = new Date(), particular = '', debit = '', credit = ''){
-	// if(!date || date == undefined || date == null || date.trim() == '' || particular.trim() == '' || (debit+credit+'').trim() == ''){
-	// 	return false;
-	// }
-	let valid = [0,0,0];
-	if(date && date != undefined && date != null){
-		valid[0]=1;
-	}
-	if(particular && particular != undefined && particular != null){
-		valid[1]=1;
-	}
-	if(debit && debit != undefined && debit != null){
-		valid[2]=1;
-	}
-	else if(credit && credit != undefined && credit != null){
-		valid[2]=1;
-	}
-
-	if(valid.join() == '1,1,1'){
-		lst_trans.push({
-			id: newTranId(),
-			date: date,
-			particular: particular,
-			amount: (debit && debit != '') ? Number.parseFloat(debit) : Number.parseFloat(credit),
-			type: (debit && debit != '') ? 'debit' : 'credit'
-		});
-		loadTransactions();
-	}
-	else{
-		console.log('Error while adding Transaction');
-	}
-
-	
-}
-
-function addNewTrans(){
-	let date = document.getElementById('newTranDate').value;
-	let particular = document.getElementById('newTranParticular').value;
-	let debit = document.getElementById('newTranDebit').value;
-	let credit = document.getElementById('newTranCredit').value;
-
-	console.log(`${date} | ${particular} | ${debit} | ${credit}`);
-
-	addTransaction(date, particular, debit, credit);
-}
-
-function onNewTranInput(tranType){
-	switch(tranType){
-		case 'debit':
-			document.getElementById('newTranCredit').value = '';
-			break;
-		case 'credit':
-			document.getElementById('newTranDebit').value = '';
-			break;
-	}
-}
-
-function onTranClick(event, tranId) {
-	if (!event.target.classList.contains('chk')) {
-		selectTran(tranId);
-	}
-	// event.stopPropagation();
-
-}
-
-function selectTran(tranId, selected = null) {
-	let chkTran = document.getElementById(`chk_${tranId}`);
-	if (selected == null) {
-		chkTran.checked = !chkTran.checked;
-	}
-	else {
-		chkTran.checked = selected;
-	}
-}
-
-function selectAllTrans() {
-	let chkAll = document.getElementById('chk_all');
-	lst_trans.forEach(tran => {
-		selectTran(tran.id, chkAll.checked);
-	});
-}
-
-function deleteSelected() {
-	let selectedIds = Array.from(document.querySelectorAll('#transactions .chk:checked')).map(chk => chk.id.split('_')[1]);
-	selectedIds = selectedIds.map(id => Number.parseInt(id));
-	lst_trans = lst_trans.filter(tran => !selectedIds.includes(tran.id));
-	loadTransactions();
-}
 
 function importTrans() {
 	lst_trans = [];
@@ -335,10 +238,12 @@ function getDateFormat(date = new Date(), format = 'yyyy-MM-dd'){
 
 function showSideMenu() {
 	slideIn('side-menu');
+	rotate0to180('side-menu-arrow');
 }
 
 function hideSideMenu() {
 	slideOut('side-menu');
+	removeEffect('side-menu-arrow','rotate0to180');
 }
 
 function loadPage(page_id, pageTitle) {
@@ -363,6 +268,36 @@ function ctxMenuItemClick(menu_id, action_name){
 	hide(document.getElementById(menu_id));
 }
 
+function editBsName(){
+	let bsNameEdit = document.getElementById('bs-name-edit');
+	let pageLabel = document.getElementById('page-label');
+	bsNameEdit.classList.remove('hidden');
+	bsNameEdit.value = pageLabel.innerText;
+	pageLabel.classList.add('hidden');
+	
+}
+
+function saveBsName(){
+	let bsNameEdit = document.getElementById('bs-name-edit');
+	let pageLabel = document.getElementById('page-label');
+	pageLabel.classList.remove('hidden');
+	pageLabel.innerText = bsNameEdit.value;
+	bsNameEdit.classList.add('hidden');
+}
+
+function onBsNameKeyDown(event){
+	if(event.key == 'Enter'){
+		saveBsName();
+	}
+}
+
+function onPageLabelDblClick(){
+	let pageLabelVal = document.getElementById('page-label').innerText;
+	console.log(pageLabelVal);
+	if(pageLabelVal == 'untitled'){
+		editBsName();
+	}
+}
 /*
 
 // Putting dom event handlers in global scope (required for webpack build)

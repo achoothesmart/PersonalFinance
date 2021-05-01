@@ -22,7 +22,15 @@ function loadDOMPage(page_id, page_title = '') {
         else{
             document.getElementById('page-label').innerText = document.getElementById(page_id).attributes['page-label'].value;
         }
-        
+        onPageLoad(page_id);
     }
     catch { }
+}
+
+function onPageLoad(page_id){
+    switch(page_id){
+        case 'page-balancesheets':
+            loadBalanceSheets('balance-sheets', balanceSheets);
+            break;
+    }
 }

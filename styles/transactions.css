@@ -1,7 +1,7 @@
 
 .trans-table{
     text-align: right;
-    font-size: small;
+    /* font-size: small; */
     cursor: pointer;
     width: 100%;
 }
@@ -21,19 +21,25 @@
     padding: 0.25em;
 }
 
-.trans-table tr:hover{
+/* .trans-table tr:hover{
     background-color: rgb(82, 82, 82);
-}
+} */
 
 .trans-table .id-col{
-    display: flex;
+    /*display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between;*/
+    text-align: center;
     
 }
 
 .trans-table .credit{
     background-color: green;
+    color: white;
+}
+
+.trans-table .unsaved{
+    color: skyblue
 }
 
 .total-row{
@@ -46,7 +52,36 @@
     cursor: pointer;
 }
 
+.trans-table .input-small{
+    display: inline-block;
+    border: none; 
+
+    width: 10em;
+    padding: 0.25em;
+    font-size: small;
+    /* border-radius: 10%; */
+}
+
 #newTranDate{
     width: 10em;
-    font-size: x-small;
+    font-size: small;
+    padding: 0.125em;
+}
+
+#tran-type-toggle{
+    font-size: small;
+    padding: 0.30em;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+}
+
+#tran-type-toggle.debit{
+    background-color: rgb(223, 84, 84);
+    color: white;
+}
+
+#tran-type-toggle.credit{
+    background-color: green;
+    color: white;
 }

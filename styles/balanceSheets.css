@@ -33,6 +33,18 @@
     font-size: smaller;
 }
 
+.b-sheet-new{
+    background-color: rgb(91, 91, 172);
+}
+
+.b-sheet-new-body{
+    text-align: center;
+    font-size: large;
+    padding: 0.05em;
+}
+
+
+
 #bs-ctx-menu{
     position: absolute;
     /* padding: 0.25em; */
@@ -54,3 +66,4 @@
     background-color: rgb(70, 70, 100);
     color: white;
 }
+

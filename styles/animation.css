@@ -95,3 +95,26 @@
 	-webkit-animation-name: slideOut;
 	animation-name: slideOut;
 }
+
+/* Rotate 0 to 180 */
+
+@-webkit-keyframes rotate0to180 {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(0deg); }
+	100% { transform: rotate(180deg); }
+}
+
+@keyframes rotate0to180 {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(0deg); }
+	100% { transform: rotate(180deg); }
+}
+
+.rotate0to180{
+    -webkit-animation-duration: 0.6s;
+	animation-duration: 0.6s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-name: rotate0to180;
+	animation-name: rotate0to180;
+}

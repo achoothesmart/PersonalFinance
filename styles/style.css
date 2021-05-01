@@ -67,7 +67,15 @@ body{
     padding: 0.5em;
     text-align: right;
     font-size: large;
+    display: flex;
+    flex-direction: row-reverse;
 }
+
+.side-menu #side-menu-arrow{
+    color: blueviolet;
+}
+
+
 
 .hint{
     font-size: smaller;
@@ -84,6 +92,15 @@ body{
 } */
 
 
-.input-small{
-    width: 6em;
+button {
+    display: inline-block;
+    border: none;
+}
+
+.badge{
+    display: inline-block;
+    border: none;
+    padding: 0.125em 0.25em  0.125em  0.25em;
+    border-radius: 40%;
+    font-size: smaller;
 }
