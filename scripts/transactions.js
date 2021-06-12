@@ -11,7 +11,7 @@ function loadTransactions() {
 		`<tr class='${tran.saved ? 'saved' : 'unsaved'}' onclick='onTranClick(event, ${tran.id})'> 
 			<td class="id-col"> <input id='chk_${tran.id}' type='checkbox' class='chk'/> </td>
 			<td> ${tran.date ? tran.date : ''}</td>
-			<td> ${tran.particular} </td> 
+			<td title ='${tran.particular}'> ${limitChars(tran.particular, '20')} </td> 
 			<td> ${tran.type == 'credit' ? '<span class="badge credit">Cr</span>' : ''} ${currency(tran.amount)}</td> 
 		</tr>`
 	).join(' ');
@@ -90,10 +90,10 @@ function addTransaction(date = new Date(), particular = '', amount = '', tranTyp
 	// if(!date || date == undefined || date == null || date.trim() == '' || particular.trim() == '' || (debit+credit+'').trim() == ''){
 	// 	return false;
 	// }
-	let valid = [0,0,0];
-	if(date && date != undefined && date != null){
-		valid[0]=1;
-	}
+	let valid = [1,0,0];
+	// if(date && date != undefined && date != null){
+	// 	valid[0]=1;
+	// }
 	if(particular && particular != undefined && particular != null){
 		valid[1]=1;
 	}
@@ -117,11 +117,17 @@ function addTransaction(date = new Date(), particular = '', amount = '', tranTyp
 			type: tranType,
 			saved: false
 		});
-		balanceSheets.filter(bs => bs.name == bsSelected)[0].saved = false;
+		let filteredBs = balanceSheets.filter(bs => bs.name == bsSelected); 
+		if(filteredBs.length == 1){
+			filteredBs[0].saved = false;
+		}
+		else if(filteredBs.length > 1){
+			alert('Multiple Balance sheets found with similar name "' + bsSelected + '"');
+		}
 		loadTransactions();
 	}
 	else{
-		console.log('Error while adding Transaction');
+		console.log('Error while adding Transaction. ERROR CODE '  + valid.join(':'));
 	}
 
 	

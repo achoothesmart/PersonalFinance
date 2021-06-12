@@ -4,7 +4,7 @@ let lst_trans = [];
 let TRAN_ID = 1;
 
 initData({
-	'app-name' : "Personal Finance v1.2",
+	'app-name': "Personal Finance v1.2",
 	// 'import-date': true,
 	// 'import-particular': true,
 	// 'import-debit': true,
@@ -21,19 +21,25 @@ onAppStart();
 // Test data
 
 balanceSheets = [
-	{ name: 'Jan 2021', saved: true, transactions: [
-		{ id: 1, date: '01/01/2021', particular: 'Salary', amount: 45000.00, type: 'credit', saved: true },
-		{ id: 2, date: '12/01/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true },
-	]},
-	{ name: 'Feb 2021', saved: true, transactions: [
-		{ id: 1, date: '01/02/2021', particular: 'Salary', amount: 47000.00, type: 'credit', saved: true },
-		{ id: 2, date: '12/02/2021', particular: 'Travel', amount: 2200.00, type: 'debit', saved: true },
-	]},
-	{ name: 'Mar 2021', saved: true, transactions: [
-		{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit', saved: true },
-		{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit', saved: true },
-		{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true }
-	]},
+	{
+		name: 'Jan 2021', saved: true, transactions: [
+			{ id: 1, date: '01/01/2021', particular: 'Salary', amount: 45000.00, type: 'credit', saved: true },
+			{ id: 2, date: '12/01/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true },
+		]
+	},
+	{
+		name: 'Feb 2021', saved: true, transactions: [
+			{ id: 1, date: '01/02/2021', particular: 'Salary', amount: 47000.00, type: 'credit', saved: true },
+			{ id: 2, date: '12/02/2021', particular: 'Travel', amount: 2200.00, type: 'debit', saved: true },
+		]
+	},
+	{
+		name: 'Mar 2021', saved: true, transactions: [
+			{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit', saved: true },
+			{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit', saved: true },
+			{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true }
+		]
+	},
 ];
 
 // lst_trans = [
@@ -48,11 +54,11 @@ loadTransactions();
 
 // declarations
 
-function onAppStart(){
+function onAppStart() {
 	initiateContextMenu();
 }
 
-function initiateContextMenu(){
+function initiateContextMenu() {
 	// document.addEventListener('contextmenu', (event)=>{
 	// 	console.log(event);
 	// 	event.preventDefault();
@@ -60,21 +66,21 @@ function initiateContextMenu(){
 }
 
 function newTranId() {
-	return Date.now()  + TRAN_ID++;
+	return Date.now() + TRAN_ID++;
 }
 // function addTrans() {
-	// if (!validateEntry()) {
-	// 	return;
-	// }
-	// lst_trans.push({
-	// 	id: newTranId(),
-	// 	particular: particular.value,
-	// 	amount: Number.parseFloat(amount.value),
-	// 	type: Array.from(document.getElementsByName('entry_type')).filter(el => el.checked)[0].value
-	// });
-	// closePopup('entry-popup');
-	// clearEntry();
-	// loadTransactions();
+// if (!validateEntry()) {
+// 	return;
+// }
+// lst_trans.push({
+// 	id: newTranId(),
+// 	particular: particular.value,
+// 	amount: Number.parseFloat(amount.value),
+// 	type: Array.from(document.getElementsByName('entry_type')).filter(el => el.checked)[0].value
+// });
+// closePopup('entry-popup');
+// clearEntry();
+// loadTransactions();
 // }
 
 function validateEntry() {
@@ -110,15 +116,13 @@ function importTrans() {
 		getData('import-credit')
 	];
 
-	
-
 	document.getElementById('import').value.split('\n').forEach((tran, index) => {
 		let tr = tran.split(getData('import_delimiter_val'));
 		console.log(tr);
-		if(false && tr.length != importSettings.filter(s => s).length){
+		if (false && tr.length != importSettings.filter(s => s).length) {
 			console.log('Invalid Transaction format at Index : ' + index);
 		}
-		else{
+		else {
 			// lst_trans.push({
 			// 	id: newTranId(),
 			// 	date: tr[0],
@@ -126,8 +130,15 @@ function importTrans() {
 			// 	amount: (tr[2] && tr[2] != '') ? Number.parseFloat(tr[2]) : Number.parseFloat(tr[3]),
 			// 	type: (tr[2] && tr[2] != '') ? 'debit' : 'credit'
 			// });
-
-			addTransaction(tr[0], tr[1], tr[2], tr[3]);
+			let t_date = new Date(tr[0]);
+			if(t_date.getTime() != t_date.getTime()){
+				t_date = '';
+			}
+			let t_particular = tr[1];
+			let t_amount = (tr[2] && tr[2] != '') ? Number.parseFloat(tr[2]) : Number.parseFloat(tr[3]);
+			let t_type = (tr[2] && tr[2] != '') ? 'debit' : 'credit';
+			
+			addTransaction(t_date, t_particular, t_amount, t_type);
 		}
 	});
 	console.log(lst_trans);
@@ -137,8 +148,8 @@ function importTrans() {
 	// loadTransactions();
 }
 
-function setImportDelimiter(delimiter){
-	switch(delimiter){
+function setImportDelimiter(delimiter) {
+	switch (delimiter) {
 		case 'tab':
 			hide(document.getElementById('custom_delimiter'));
 			setData('import_delimiter_val', '\t');
@@ -152,38 +163,38 @@ function setImportDelimiter(delimiter){
 			break;
 	}
 	refreshImportFormat();
-	
+
 }
 
-function setImportData(key, value){
+function setImportData(key, value) {
 	setData(key, value);
 	refreshImportFormat();
 }
 
-function refreshImportFormat(){
+function refreshImportFormat() {
 	// [Date]_tab_[Particular]_tab_[debit]_tab_[credit]
 	let importFormat = '';
 	let arr = [];
-	if(getData('import-date')){
+	if (getData('import-date')) {
 		arr.push('[Date]');
 	}
-	if(getData('import-particular')){
+	if (getData('import-particular')) {
 		arr.push('[Particular]');
 	}
-	if(getData('import-debit')){
+	if (getData('import-debit')) {
 		arr.push('[Debit]');
 	}
-	if(getData('import-credit')){
+	if (getData('import-credit')) {
 		arr.push('[Credit]');
 	}
 
-	if(getData('import_delimiter_val') == '\t'){
+	if (getData('import_delimiter_val') == '\t') {
 		importFormat = arr.join(getData('import_delimiter_txt'));
 	}
-	else{
+	else {
 		importFormat = arr.join(getData('import_delimiter_val'));
 	}
-	
+
 	setData('import-format', importFormat);
 }
 
@@ -215,25 +226,39 @@ function currency(amt = 0) {
 // 	return datePart + '_' + timePart;
 // }
 
-function getDateFormat(date = new Date(), format = 'yyyy-MM-dd'){
+function getDateFormat(date = new Date(), format = 'yyyy-MM-dd') {
 	// supports only year = [yyyy], month = [MM], date = [dd] formats
-	let year = date.getFullYear()+'';
-	let month = (date.getMonth()+1)+'';
-	let day = date.getDate()+'';
+	try {
+		let year = date.getFullYear() + '';
+		let month = (date.getMonth() + 1) + '';
+		let day = date.getDate() + '';
 
-	if(month.length < 2){
-		month = '0' + month;
+		if (month.length < 2) {
+			month = '0' + month;
+		}
+		if (day.length < 2) {
+			day = '0' + day;
+		}
+
+		let res = format;
+		res = res.split('yyyy').join(year);
+		res = res.split('MM').join(month);
+		res = res.split('dd').join(day);
+
+		return res;
+	} 
+	catch {
+		return '';
 	}
-	if(day.length < 2){
-		day = '0' + day;
+}
+
+function limitChars(str, len){
+	if(str.length > len){
+		return (str.substring(0, len-2) + '..');
 	}
-
-	let res = format;
-	res = res.split('yyyy').join(year);
-	res = res.split('MM').join(month);
-	res = res.split('dd').join(day);
-
-	return res;
+	else{
+		return str;
+	}
 }
 
 function showSideMenu() {
@@ -243,7 +268,7 @@ function showSideMenu() {
 
 function hideSideMenu() {
 	slideOut('side-menu');
-	removeEffect('side-menu-arrow','rotate0to180');
+	removeEffect('side-menu-arrow', 'rotate0to180');
 }
 
 function loadPage(page_id, pageTitle) {
@@ -251,33 +276,33 @@ function loadPage(page_id, pageTitle) {
 	hideSideMenu();
 }
 
-function show(el){
+function show(el) {
 	el.classList.remove('hide');
 }
 
-function hide(el){
+function hide(el) {
 	el.classList.add('hide');
 }
 
-function ctxMenuItemClick(menu_id, action_name){
+function ctxMenuItemClick(menu_id, action_name) {
 	// console.log(menu_id, action_name);
-	if(menu_id == 'bs-ctx-menu'){
+	if (menu_id == 'bs-ctx-menu') {
 		onBsCtxMenuClick(action_name);
 	}
-	
+
 	hide(document.getElementById(menu_id));
 }
 
-function editBsName(){
+function editBsName() {
 	let bsNameEdit = document.getElementById('bs-name-edit');
 	let pageLabel = document.getElementById('page-label');
 	bsNameEdit.classList.remove('hidden');
 	bsNameEdit.value = pageLabel.innerText;
 	pageLabel.classList.add('hidden');
-	
+
 }
 
-function saveBsName(){
+function saveBsName() {
 	let bsNameEdit = document.getElementById('bs-name-edit');
 	let pageLabel = document.getElementById('page-label');
 	pageLabel.classList.remove('hidden');
@@ -285,16 +310,16 @@ function saveBsName(){
 	bsNameEdit.classList.add('hidden');
 }
 
-function onBsNameKeyDown(event){
-	if(event.key == 'Enter'){
+function onBsNameKeyDown(event) {
+	if (event.key == 'Enter') {
 		saveBsName();
 	}
 }
 
-function onPageLabelDblClick(){
+function onPageLabelDblClick() {
 	let pageLabelVal = document.getElementById('page-label').innerText;
 	console.log(pageLabelVal);
-	if(pageLabelVal == 'untitled'){
+	if (pageLabelVal == 'untitled') {
 		editBsName();
 	}
 }
