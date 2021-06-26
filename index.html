@@ -35,8 +35,7 @@
 					<div> &#9658; </div>
 				</td>
 				<td>
-					<div id="page-label" ondblclick="onPageLabelDblClick()"></div>
-					<input id="bs-name-edit" class="hidden" onkeydown="onBsNameKeyDown(event)"/>
+					<div id="page-label"></div>
 				</td>
 			</tr>
 		</table>
@@ -53,7 +52,8 @@
 			<table id="controls">
 				<tr>
 					<td> <button class="button" onclick="loadPopup('import-popup')">Import</button> </td>
-					<td> <button class="button" onclick="loadPopup('entry-popup')">Add Entry</button> </td>
+					<!-- <td> <button class="button" onclick="loadPopup('entry-popup')">Add Entry</button> </td> -->
+					<td> <button class="button" onclick="onSaveBalancesheetClick()">Save Balancesheet</button> </td>
 					<td> <button id="btnDelete" class="button" onclick="deleteSelected()">Delete Selected</button> </td>
 				</tr>
 			</table>
@@ -135,6 +135,17 @@
 
 	</div>
 
+	<!-- (3) Save BS popup -->
+	<div id="savebs-popup" class="popup-box">
+		<h3>Save Balancesheet</h3>
+		Select Month <input type="month" id="new_bs_month" onchange="suggestNewBSName(this.value)"/>
+		<br />
+		BS Name<input type="text" id="new_bs_name" placeholder="Balancesheet Name"/>
+		<br />
+		<input type="button" value="Cancel" onclick="closePopup('savebs-popup')" />
+		<input type="button" value="Save Balancesheet" onclick="saveNewBalancesheet()" />
+	</div>
+
 	<!-- Region: ContextMenu  -->
 	<div id="bs-ctx-menu" class="hide">
 		<div class="ctx-menu-item" onclick="ctxMenuItemClick('bs-ctx-menu', 'open')">Open</div>
@@ -164,7 +175,8 @@
 		// Initialize Firebase
 		firebase.initializeApp(firebaseConfig);
 	</script>
-
+	
+	<script src="./scripts/firebaseHandler.js"></script>
 	<script src="./scripts/dataService.js"></script>
 	<script src="./scripts/pageRouter.js"></script>
 	<script src="./scripts/transactions.js"></script>
@@ -172,7 +184,7 @@
 	<script src="./scripts/animation.js"></script>
 	<script src="./scripts/popup.js"></script>
 	<script src="./scripts/script.js"></script>
-	<script src="./scripts/firebaseHandler.js"></script>
+	
 	
 </body>
 

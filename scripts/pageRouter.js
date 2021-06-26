@@ -4,7 +4,7 @@ let currentPage = 'page-balancesheets';
 
 loadDOMPage(currentPage);
 
-function loadDOMPage(page_id, page_title = '') {
+function loadDOMPage(page_id, page_title = '', onPageLoad) {
     try {
         let dom_pages = document.querySelectorAll('#pages .page');
         dom_pages.forEach(dom_page => {
@@ -27,10 +27,10 @@ function loadDOMPage(page_id, page_title = '') {
     catch { }
 }
 
-function onPageLoad(page_id){
-    switch(page_id){
-        case 'page-balancesheets':
-            loadBalanceSheets('balance-sheets', balanceSheets);
-            break;
-    }
-}
+// function onPageLoad(page_id){
+//     switch(page_id){
+//         case 'page-balancesheets':
+//             loadBalanceSheets('balance-sheets', balanceSheets);
+//             break;
+//     }
+// }

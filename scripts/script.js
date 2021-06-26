@@ -20,42 +20,38 @@ onAppStart();
 
 // Test data
 
-balanceSheets = [
-	{
-		name: 'Jan 2021', saved: true, transactions: [
-			{ id: 1, date: '01/01/2021', particular: 'Salary', amount: 45000.00, type: 'credit', saved: true },
-			{ id: 2, date: '12/01/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true },
-		]
-	},
-	{
-		name: 'Feb 2021', saved: true, transactions: [
-			{ id: 1, date: '01/02/2021', particular: 'Salary', amount: 47000.00, type: 'credit', saved: true },
-			{ id: 2, date: '12/02/2021', particular: 'Travel', amount: 2200.00, type: 'debit', saved: true },
-		]
-	},
-	{
-		name: 'Mar 2021', saved: true, transactions: [
-			{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit', saved: true },
-			{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit', saved: true },
-			{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true }
-		]
-	},
-];
-
-// lst_trans = [
-// 	{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit' },
-// 	{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit' },
-// 	{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit' }
-// ];
-
-loadBalanceSheets('balance-sheets', balanceSheets);
-
-loadTransactions();
+function LoadSampleData() {
+	balanceSheets = [
+		{
+			name: 'Jan 2021', saved: true, transactions: [
+				{ id: 1, date: '01/01/2021', particular: 'Salary', amount: 45000.00, type: 'credit', saved: true },
+				{ id: 2, date: '12/01/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true },
+			]
+		},
+		{
+			name: 'Feb 2021', saved: true, transactions: [
+				{ id: 1, date: '01/02/2021', particular: 'Salary', amount: 47000.00, type: 'credit', saved: true },
+				{ id: 2, date: '12/02/2021', particular: 'Travel', amount: 2200.00, type: 'debit', saved: true },
+			]
+		},
+		{
+			name: 'Mar 2021', saved: true, transactions: [
+				{ id: 1, date: '01/03/2021', particular: 'Salary', amount: 50000.00, type: 'credit', saved: true },
+				{ id: 2, date: '12/03/2021', particular: 'Maligai', amount: 2500.00, type: 'debit', saved: true },
+				{ id: 3, date: '23/03/2021', particular: 'Rent', amount: 10000.00, type: 'debit', saved: true }
+			]
+		},
+	];
+}
 
 // declarations
 
 function onAppStart() {
 	initiateContextMenu();
+	// LoadSampleData();
+	//getssdcdcxds
+	getBalanceSheets();
+	// loadBalanceSheets('balance-sheets', balanceSheets);
 }
 
 function initiateContextMenu() {
@@ -131,13 +127,13 @@ function importTrans() {
 			// 	type: (tr[2] && tr[2] != '') ? 'debit' : 'credit'
 			// });
 			let t_date = new Date(tr[0]);
-			if(t_date.getTime() != t_date.getTime()){
+			if (t_date.getTime() != t_date.getTime()) {
 				t_date = '';
 			}
 			let t_particular = tr[1];
 			let t_amount = (tr[2] && tr[2] != '') ? Number.parseFloat(tr[2]) : Number.parseFloat(tr[3]);
 			let t_type = (tr[2] && tr[2] != '') ? 'debit' : 'credit';
-			
+
 			addTransaction(t_date, t_particular, t_amount, t_type);
 		}
 	});
@@ -246,17 +242,17 @@ function getDateFormat(date = new Date(), format = 'yyyy-MM-dd') {
 		res = res.split('dd').join(day);
 
 		return res;
-	} 
+	}
 	catch {
 		return '';
 	}
 }
 
-function limitChars(str, len){
-	if(str.length > len){
-		return (str.substring(0, len-2) + '..');
+function limitChars(str, len) {
+	if (str.length > len) {
+		return (str.substring(0, len - 2) + '..');
 	}
-	else{
+	else {
 		return str;
 	}
 }
@@ -272,7 +268,13 @@ function hideSideMenu() {
 }
 
 function loadPage(page_id, pageTitle) {
-	loadDOMPage(page_id, pageTitle);
+	loadDOMPage(page_id, pageTitle, (page_id) => {
+		switch (page_id) {
+			case 'page-balancesheets':
+				loadBalanceSheets('balance-sheets', balanceSheets);
+				break;
+		}
+	});
 	hideSideMenu();
 }
 
@@ -293,36 +295,7 @@ function ctxMenuItemClick(menu_id, action_name) {
 	hide(document.getElementById(menu_id));
 }
 
-function editBsName() {
-	let bsNameEdit = document.getElementById('bs-name-edit');
-	let pageLabel = document.getElementById('page-label');
-	bsNameEdit.classList.remove('hidden');
-	bsNameEdit.value = pageLabel.innerText;
-	pageLabel.classList.add('hidden');
 
-}
-
-function saveBsName() {
-	let bsNameEdit = document.getElementById('bs-name-edit');
-	let pageLabel = document.getElementById('page-label');
-	pageLabel.classList.remove('hidden');
-	pageLabel.innerText = bsNameEdit.value;
-	bsNameEdit.classList.add('hidden');
-}
-
-function onBsNameKeyDown(event) {
-	if (event.key == 'Enter') {
-		saveBsName();
-	}
-}
-
-function onPageLabelDblClick() {
-	let pageLabelVal = document.getElementById('page-label').innerText;
-	console.log(pageLabelVal);
-	if (pageLabelVal == 'untitled') {
-		editBsName();
-	}
-}
 /*
 
 // Putting dom event handlers in global scope (required for webpack build)
